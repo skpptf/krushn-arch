@@ -27,29 +27,30 @@ fi
 
 # to create the partitions programatically (rather than manually)
 # https://superuser.com/a/984637
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${TGTDEV}
-  o # clear the in memory partition table
-  n # new partition
-  p # primary partition
-  1 # partition number 1
+#sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${TGTDEV}
+#  o # clear the in memory partition table
+#  n # new partition
+#  p # primary partition
+#  1 # partition number 1
     # default - start at beginning of disk 
-  +512M # 512 MB boot parttion
-  n # new partition
-  p # primary partition
-  2 # partion number 2
+#  +512M # 512 MB boot parttion
+#  n # new partition
+#  p # primary partition
+#  2 # partion number 2
     # default, start immediately after preceding partition
-  +8G # 8 GB swap parttion
-  n # new partition
-  p # primary partition
-  3 # partion number 3
+#  +8G # 8 GB swap parttion
+#  n # new partition
+#  p # primary partition
+#  3 # partion number 3
     # default, start immediately after preceding partition
     # default, extend partition to end of disk
-  a # make a partition bootable
-  1 # bootable partition is partition 1 -- /dev/sda1
-  p # print the in-memory partition table
-  w # write the partition table
-  q # and we're done
-EOF
+#  a # make a partition bootable
+#  1 # bootable partition is partition 1 -- /dev/sda1
+#  p # print the in-memory partition table
+#  w # write the partition table
+#  q # and we're done
+#EOF
+fdisk /de/sda
 
 # Format the partitions
 mkfs.ext4 /dev/sda3
@@ -65,8 +66,8 @@ pacman-key --refresh-keys
 
 # Mount the partitions
 mount /dev/sda3 /mnt
-mkdir -pv /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
+mkdir -pv /mnt/boot
+mount /dev/sda1 /mnt/boot
 mkswap /dev/sda2
 swapon /dev/sda2
 
